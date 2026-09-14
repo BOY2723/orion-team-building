@@ -3,13 +3,25 @@ import streamlit as st
 # Configuration de la page
 st.set_page_config(page_title="TechNova OS | Opération ORION", page_icon="🕵️", layout="wide")
 
-# Initialisation des variables de session
+# ==========================================
+# INITIALISATION DES VARIABLES DE SESSION
+# ==========================================
 if "step" not in st.session_state:
     st.session_state.step = 1
 if "etape2_success" not in st.session_state:
     st.session_state.etape2_success = False
 if "etape3_success" not in st.session_state:
     st.session_state.etape3_success = False
+
+# Fonctions de transition sécurisées (elles ne s'activent que si la réponse est bonne)
+def passer_etape_3():
+    st.session_state.step = 3
+    st.session_state.etape2_success = False
+
+def passer_etape_4():
+    st.session_state.step = 4
+    st.session_state.etape3_success = False
+
 # ==========================================
 # GESTION DES ARRIÈRE-PLANS
 # ==========================================
@@ -22,7 +34,7 @@ backgrounds = {
 }
 bg_url = backgrounds.get(st.session_state.step, backgrounds[1])
 
-# CSS Avancé (incluant le design du badge)
+# CSS Avancé
 st.markdown(
     f"""
     <style>
@@ -63,7 +75,7 @@ st.markdown(
 st.markdown("<h1 class='main-title'>TechNova_OS // TERMINAL D'ENQUÊTE</h1>", unsafe_allow_html=True)
 
 # ==========================================
-# ÉTAPE 1 : Accès au Système (AVEC LE BADGE)
+# ÉTAPE 1 : Accès au Système
 # ==========================================
 if st.session_state.step == 1:
     st.markdown("<div class='terminal-box'>[REQUÊTE SYSTÈME] : ALERTE SÉCURITÉ.<br>Protocole ORION compromis. Veuillez scanner votre badge digital pour accéder au serveur d'enquête principal.</div>", unsafe_allow_html=True)
@@ -89,12 +101,11 @@ if st.session_state.step == 1:
             st.error("Authentification échouée. Empreinte non reconnue.")
 
 # ==========================================
-# ÉTAPE 2 : Décodage du message (Code César Modifié)
+# ÉTAPE 2 : Décodage du message
 # ==========================================
 elif st.session_state.step == 2:
     st.header("Étape 2 : Interception de communication")
     
-    # L'indice caché est ici au lieu du "-5" explicite
     st.markdown("<div class='sys-alert'>ALERTE : Un paquet de données crypté a été intercepté. <br><i>Note de l'analyste : Le hacker a tenté d'avancer masqué, mais la trace de son algorithme montre qu'il a dû <b>reculer de cinq pas</b> pour brouiller les pistes.</i></div>", unsafe_allow_html=True)
     
     st.markdown("<div class='terminal-box'>MESSAGE INTERCEPTÉ :<br><br><b>Zs htzufgqj ufwrn stzx, xznaje qjx nsinhjx utzw qj ywtzajw.</b></div>", unsafe_allow_html=True)
@@ -102,17 +113,22 @@ elif st.session_state.step == 2:
     st.write("Déchiffrez le message. Pour prouver que vous avez compris, entrez les **deux premiers mots** du message décodé.")
     
     cesar_input = st.text_input("Les deux premiers mots du message :")
+    
+    # 1. On vérifie la réponse
     if st.button("Déchiffrer le paquet"):
         reponse = cesar_input.strip().lower()
-        # Le système accepte "un coupable" OU la phrase complète (en ignorant la ponctuation finale)
         if reponse == "un coupable" or reponse.startswith("un coupable parmi nous"):
-            st.success("✅ Message décodé : 'Un coupable parmi nous, suivez les indices pour le trouver.'")
-            st.info("Le pare-feu est tombé. Accès aux caméras autorisé.")
-            if st.button("Connecter au flux de vidéosurveillance"):
-                st.session_state.step = 3
-                st.rerun()
+            st.session_state.etape2_success = True # C'est bon, on débloque la suite
         else:
+            st.session_state.etape2_success = False
             st.error("Traduction incorrecte. Le système rejette votre requête.")
+
+    # 2. On affiche le bouton de passage UNIQUEMENT si la réponse était bonne
+    if st.session_state.etape2_success:
+        st.success("✅ Message décodé : 'Un coupable parmi nous, suivez les indices pour le trouver.'")
+        st.info("Le pare-feu est tombé. Accès aux caméras autorisé.")
+        st.button("Connecter au flux de vidéosurveillance", on_click=passer_etape_3)
+
 # ==========================================
 # ÉTAPE 3 : Ordonnancement & Traitement d'image
 # ==========================================
@@ -141,19 +157,18 @@ elif st.session_state.step == 3:
 
     reponse_etape3 = st.text_input("Séquence numérique finale (7 chiffres) :")
     
+    # 1. On vérifie la réponse
     if st.button("Compiler la vidéo"):
         if reponse_etape3.strip() == "7342615":
-            st.session_state.etape3_success = True
+            st.session_state.etape3_success = True # C'est bon, on débloque la suite
         else:
             st.error("Crash système. L'ordre des processeurs est incorrect.")
             st.session_state.etape3_success = False
 
+    # 2. On affiche le bouton de passage UNIQUEMENT si la réponse était bonne
     if st.session_state.etape3_success:
         st.success("✅ Séquence vidéo restaurée ! Sur l'image floue, vous distinguez une silhouette accédant au serveur principal. Détail troublant : la personne porte une montre en argent massif très spécifique.")
-        if st.button("Infiltrer les disques durs des suspects"):
-            st.session_state.step = 4
-            st.session_state.etape3_success = False
-            st.rerun()
+        st.button("Infiltrer les disques durs des suspects", on_click=passer_etape_4)
 
 # ==========================================
 # ÉTAPE 4 : Investigation Numérique
