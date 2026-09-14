@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 # Configuration de la page
 st.set_page_config(page_title="TechNova OS | Opération ORION", page_icon="🕵️", layout="wide")
@@ -11,18 +10,18 @@ if "etape3_success" not in st.session_state:
     st.session_state.etape3_success = False
 
 # ==========================================
-# GESTION DES ARRIÈRE-PLANS (Encore plus immersifs)
+# GESTION DES ARRIÈRE-PLANS
 # ==========================================
 backgrounds = {
     1: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2000&auto=format&fit=crop", # Code Matrix / Cyber
     2: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=2000&auto=format&fit=crop", # Message intercepté / Ondes
     3: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?q=80&w=2000&auto=format&fit=crop", # Caméra de sécurité
-    4: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop", # Bureaux d'entreprise sombres
-    5: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop"  # Verdict / Ombres
+    4: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop", # Bureaux d'entreprise
+    5: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop"  # Verdict
 }
 bg_url = backgrounds.get(st.session_state.step, backgrounds[1])
 
-# CSS Avancé
+# CSS Avancé (incluant le design du badge)
 st.markdown(
     f"""
     <style>
@@ -41,13 +40,19 @@ st.markdown(
         border-radius: 5px; font-family: 'Courier New', Courier, monospace; color: #00FF41;
         box-shadow: 0 0 15px rgba(0, 255, 65, 0.1); margin-bottom: 20px;
     }}
-    .hacker-grid {{
-        font-family: 'Courier New', Courier, monospace; font-size: 1.2rem; letter-spacing: 5px;
-        color: #00FF41; background: #000; padding: 20px; text-align: center; border-radius: 5px;
+    .badge-card {{
+        background: linear-gradient(135deg, #1f1f1f, #0a0a0a);
+        border: 2px solid #4CAF50; border-radius: 10px; padding: 20px;
+        text-align: center; width: 320px; margin: 0 auto 20px auto;
+        box-shadow: 0 4px 15px rgba(0,255,65,0.4);
     }}
     .sys-alert {{
         background-color: rgba(220, 53, 69, 0.1); border-left: 5px solid #dc3545;
         padding: 15px; color: #f8f9fa; margin-bottom: 20px; font-family: sans-serif;
+    }}
+    .hacker-grid {{
+        font-family: 'Courier New', Courier, monospace; font-size: 1.2rem; letter-spacing: 5px;
+        color: #00FF41; background: #000; padding: 20px; text-align: center; border-radius: 5px;
     }}
     </style>
     """,
@@ -57,27 +62,41 @@ st.markdown(
 st.markdown("<h1 class='main-title'>TechNova_OS // TERMINAL D'ENQUÊTE</h1>", unsafe_allow_html=True)
 
 # ==========================================
-# ÉTAPE 1 : Accès au Système
+# ÉTAPE 1 : Accès au Système (AVEC LE BADGE)
 # ==========================================
 if st.session_state.step == 1:
-    st.markdown("<div class='terminal-box'>[REQUÊTE SYSTÈME] : Authentification requise.<br>Veuillez insérer le code d'accès de votre badge d'investigation.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='terminal-box'>[REQUÊTE SYSTÈME] : ALERTE SÉCURITÉ.<br>Protocole ORION compromis. Veuillez scanner votre badge digital pour accéder au serveur d'enquête principal.</div>", unsafe_allow_html=True)
     
-    code_input = st.text_input("Saisissez le mot de passe :", placeholder="ID Visuel (NOIRO ATAD)")
+    st.markdown(
+        """
+        <div class='badge-card'>
+            <h3 style='color: white; margin-bottom: 5px;'>BADGE ACCÈS VISITEUR</h3>
+            <div style='background-color: #4CAF50; height: 3px; width: 100%; margin-bottom: 15px;'></div>
+            <p style='color: gray; font-size: 12px; margin-bottom: 5px;'>ID SCAN : 849-B / NIVEAU 1</p>
+            <h2 style='color: #00FF41; letter-spacing: 4px; font-family: "Courier New";'>NOIRO ATAD</h2>
+            <p style='color: gray; font-size: 11px; margin-top: 15px;'>TechNova Corp. - STRICTEMENT PERSONNEL</p>
+        </div>
+        """, unsafe_allow_html=True
+    )
+    
+    code_input = st.text_input("Saisissez le mot de passe :", placeholder="ID Visuel")
     if st.button("Initialiser la connexion"):
         if code_input.strip().upper() == "ORION DATA":
             st.session_state.step = 2
             st.rerun()
         else:
-            st.error("Authentification échouée.")
+            st.error("Authentification échouée. Empreinte non reconnue.")
 
 # ==========================================
-# ÉTAPE 2 : Décodage du message (Code César)
+# ÉTAPE 2 : Décodage du message (Code César Modifié)
 # ==========================================
 elif st.session_state.step == 2:
     st.header("Étape 2 : Interception de communication")
-    st.markdown("<div class='sys-alert'>ALERTE : Un paquet de données crypté a été intercepté sur le réseau interne juste après le vol. L'algorithme de chiffrement semble être une antique translation alphabétique.</div>", unsafe_allow_html=True)
     
-    st.markdown("<div class='terminal-box'>MESSAGE INTERCEPTÉ :<br><br><b>Zs htzufgqj ufwrn stzx, xznaje qjx nsinhjx utzw qj ywtzajw.</b><br><br>>_ Analyse : Décalage de fréquence détecté (-5).</div>", unsafe_allow_html=True)
+    # L'indice caché est ici au lieu du "-5" explicite
+    st.markdown("<div class='sys-alert'>ALERTE : Un paquet de données crypté a été intercepté. <br><i>Note de l'analyste : Le hacker a tenté d'avancer masqué, mais la trace de son algorithme montre qu'il a dû <b>reculer de cinq pas</b> pour brouiller les pistes.</i></div>", unsafe_allow_html=True)
+    
+    st.markdown("<div class='terminal-box'>MESSAGE INTERCEPTÉ :<br><br><b>Zs htzufgqj ufwrn stzx, xznaje qjx nsinhjx utzw qj ywtzajw.</b></div>", unsafe_allow_html=True)
     
     st.write("Déchiffrez le message. Pour prouver que vous avez compris, entrez les **deux premiers mots** du message décodé.")
     
@@ -196,7 +215,6 @@ elif st.session_state.step == 4:
         """)
         code_mehdi = st.text_input("Code PIN (5 chiffres) :", key="mehdi")
         if st.button("Déverrouiller le coffre"):
-            # Probleme (8) - Boussole (8) - Automne (7) - Coeur (5) - Jour (4) -> 88754
             if code_mehdi.strip() == "88754":
                 st.success("✅ **Preuve récupérée :** Relevé bancaire offshore à 23h35 (heure du vol). Virement entrant de 2 millions. Juste à côté, des avis d'huissiers pour des dettes de poker colossales. Et la facture pour une montre en argent massif sur-mesure.")
             else:
