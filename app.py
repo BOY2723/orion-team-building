@@ -259,11 +259,11 @@ elif st.session_state.step == 4:
         st.subheader("Terminal de Mehdi Trabelsi")
         st.write("Code PIN de la direction (5 chiffres basés sur la longueur des mots).")
         st.markdown("""
-        1. On l'optimise souvent en Génie Industriel grâce à la RO. (8)
-        2. Instrument indiquant le Nord. (8)
-        3. Saison où les feuilles tombent. (7)
-        4. Organe vital dans la poitrine. (5)
-        5. L'opposé exact de la nuit. (4)
+        1. On l'optimise souvent en Génie Industriel grâce à la RO.
+        2. Instrument indiquant le Nord.
+        3. Saison où les feuilles tombent.
+        4. Organe vital dans la poitrine.
+        5. L'opposé exact de la nuit.
         """)
         code_mehdi = st.text_input("Code PIN (5 chiffres) :", key="mehdi")
         
