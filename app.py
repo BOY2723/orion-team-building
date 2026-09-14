@@ -8,7 +8,13 @@ if "step" not in st.session_state:
     st.session_state.step = 1
 if "etape3_success" not in st.session_state:
     st.session_state.etape3_success = False
-
+# Initialisation des variables de session
+if "step" not in st.session_state:
+    st.session_state.step = 1
+if "etape2_success" not in st.session_state:
+    st.session_state.etape2_success = False
+if "etape3_success" not in st.session_state:
+    st.session_state.etape3_success = False
 # ==========================================
 # GESTION DES ARRIÈRE-PLANS
 # ==========================================
