@@ -102,7 +102,9 @@ elif st.session_state.step == 2:
     
     cesar_input = st.text_input("Les deux premiers mots du message :")
     if st.button("Déchiffrer le paquet"):
-        if cesar_input.strip().lower() == "un coupable":
+        reponse = cesar_input.strip().lower()
+        # Le système accepte "un coupable" OU la phrase complète (en ignorant la ponctuation finale)
+        if reponse == "un coupable" or reponse.startswith("un coupable parmi nous"):
             st.success("✅ Message décodé : 'Un coupable parmi nous, suivez les indices pour le trouver.'")
             st.info("Le pare-feu est tombé. Accès aux caméras autorisé.")
             if st.button("Connecter au flux de vidéosurveillance"):
@@ -110,7 +112,6 @@ elif st.session_state.step == 2:
                 st.rerun()
         else:
             st.error("Traduction incorrecte. Le système rejette votre requête.")
-
 # ==========================================
 # ÉTAPE 3 : Ordonnancement & Traitement d'image
 # ==========================================
