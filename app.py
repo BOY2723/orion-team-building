@@ -188,7 +188,7 @@ elif st.session_state.step == 4:
         <div class='hacker-grid'>
         A T K W Q P Z L X O V<br>
         B M A R T I F I C I A L<br>
-        R K M O N D A S E X P<br>
+        R K M O N D A S M X P<br>
         W P I N T E L L I G E N C E<br>
         V C H J K M T R Z N S
         </div>
