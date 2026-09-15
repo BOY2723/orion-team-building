@@ -259,7 +259,7 @@ elif st.session_state.step == 4:
         st.subheader("Terminal de Mehdi Trabelsi")
         st.write("Code PIN de la direction (5 chiffres basés sur la longueur des mots).")
         st.markdown("""
-        1. On l'optimise souvent en Génie Industriel grâce à la RO.
+        1. Un ingénieur GI cherche toujours à le maximiser.
         2. Instrument indiquant le Nord.
         3. Saison où les feuilles tombent.
         4. Organe vital dans la poitrine.
@@ -268,7 +268,7 @@ elif st.session_state.step == 4:
         code_mehdi = st.text_input("Code PIN (5 chiffres) :", key="mehdi")
         
         if st.button("Déverrouiller", key="btn_mehdi"):
-            if code_mehdi.strip() == "88754":
+            if code_mehdi.strip() == "68754":
                 st.session_state.doc_mehdi_unlocked = True
             else:
                 st.error("Code PIN erroné.")
