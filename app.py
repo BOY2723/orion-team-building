@@ -149,7 +149,7 @@ elif st.session_state.step == 3:
     
     st.write("Matrice des dépendances extraite du cache :")
     st.markdown("""
-    | Processeurs \ Images | P1 | P2 | P3 | P4 | P5 | P6 | P7 |
+    | Images \ Processeurs | P1 | P2 | P3 | P4 | P5 | P6 | P7 |
     | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
     | **I1** | | | 2 | 3 | 4 | | 1 |
     | **I2** | 3 | | 1 | | 4 | 2 | |
